@@ -48,6 +48,9 @@
       <None Update="Templates\ts-json\schema.sbn">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="Templates\typescript-bin\schema.sbn">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
       <None Update="Templates\typescript-json\schema.sbn">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
