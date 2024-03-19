@@ -71,7 +71,8 @@ public class UnderlyingDeclaringTypeNameVisitor : ITypeFuncVisitor<string>
 
     public string Accept(TSet type)
     {
-        return $"[]{type.ElementType.Apply(this)}";
+        return $"map[{type.ElementType.Apply(this)}]struct{{}}";
+        //return $"[]{type.ElementType.Apply(this)}";
     }
 
     public string Accept(TMap type)

@@ -106,7 +106,20 @@ class DeserializeJsonUnderingVisitor : ITypeFuncVisitor<string, string, string, 
 
     public string Accept(TSet type, string varName, string fieldName, string bufName)
     {
-        return GenList(type.ElementType, varName, fieldName, bufName);
+        //return GenList(type.ElementType, varName, fieldName, bufName);
+        return $@" {{
+                var _arr_ []interface{{}}
+                var _ok_ bool
+                if _arr_, _ok_ = {bufName}[""{fieldName}""].([]interface{{}}); !_ok_ {{ err = errors.New(""{fieldName} error""); return }}
+
+                {varName} = make({type.Apply(DeclaringTypeNameVisitor.Ins)})
+                
+                for _, _e_ := range _arr_ {{
+                    var _list_v_ {type.ElementType.Apply(DeclaringTypeNameVisitor.Ins)}
+                    {type.ElementType.Apply(DeserializeJson2Visitor.Ins, "_list_v_", "_e_")}
+                    {varName}[_list_v_] = struct{{}}{{}}
+                }}
+            }}";
     }
 
     public string Accept(TMap type, string varName, string fieldName, string bufName)
